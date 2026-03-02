@@ -8,7 +8,9 @@ import java.util.ArrayList;
 public class Livraison
         // TODO : À compléter/modifier
 {
+
     // Les données membres statiques
+    private static int numSequentiel=0;
     // TODO : À compléter/modifier
 
     // Les attributs d'instance
@@ -33,10 +35,12 @@ public class Livraison
 
     /**
      * Produit un nouvel ID pour la Livraison
+     * @return prochainNumSequentiel : donne la valeur du nouveu numéro séquantiel
      */
     private static int prochainID() {
         // TODO : À compléter/modifier
-        return 0;
+        numSequentiel ++;
+        return numSequentiel;
     }
 
     /**
