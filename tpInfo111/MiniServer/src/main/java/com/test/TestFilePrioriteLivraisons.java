@@ -2,23 +2,23 @@ package com.test;
 
 import com.gestionnaireLivraisons.FilePrioriteLivraisons;
 import com.gestionnaireLivraisons.Livraison;
+import com.gestionnaireLivraisons.Priorite;
 // TODO : À compléter/modifier
 
-import java.util.Arrays;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestFilePrioriteLivraisons {
     /**
      * Test de la méthode estVide.
-     * good
-     * noope
-     * tes3
      */
+    private static FilePrioriteLivraisons fileTest = new FilePrioriteLivraisons();
+
     private static void testEstVide() {
         System.out.print("Test estVide : ");
 
         // TODO : À compléter/modifier
-        System.out.println("À implémenter...");
+        System.out.println(fileTest.estVide());
     }
 
     /**
@@ -28,7 +28,9 @@ public class TestFilePrioriteLivraisons {
         System.out.print("Test ajouter : ");
 
         // TODO : À compléter/modifier
-        System.out.println("À implémenter...");
+        Livraison livraisonTest = new Livraison(Priorite.URGENTE, 1);
+        fileTest.ajouter(livraisonTest);
+        fileTest.afficher();
     }
 
     /**
@@ -38,7 +40,16 @@ public class TestFilePrioriteLivraisons {
         System.out.print("Test ajouterTout : ");
 
         // TODO : À compléter/modifier
-        System.out.println("À implémenter...");
+        List<Livraison> livraisons = new ArrayList<>();
+
+        livraisons.add(new Livraison(Priorite.NORMALE, 3));
+        livraisons.add(new Livraison(Priorite.URGENTE, 3));
+        livraisons.add(new Livraison(Priorite.NORMALE, 2));
+        livraisons.add(new Livraison(Priorite.URGENTE, 2));
+        livraisons.add(new Livraison(Priorite.NORMALE, 1));
+        livraisons.add(new Livraison(Priorite.URGENTE, 1));
+        fileTest.ajouterTout(livraisons);
+        fileTest.afficher();
     }
 
     /**
@@ -48,7 +59,7 @@ public class TestFilePrioriteLivraisons {
         System.out.print("Test taille : ");
 
         // TODO : À compléter/modifier
-        System.out.println("À implémenter...");
+        System.out.println("taille real: 7, taille par le méthode: "+fileTest.taille() );
     }
 
     /**
@@ -58,7 +69,10 @@ public class TestFilePrioriteLivraisons {
         System.out.print("Test retirer : ");
 
         // TODO : À compléter/modifier
-        System.out.println("À implémenter...");
+
+        System.out.println("l'élement le plus prioritaire : " + fileTest.retirer());
+        System.out.print("élement restant :");
+        fileTest.afficher();
     }
 
     /**
