@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * La classe qui modélise une livraison.
  */
-public class Livraison
+public class Livraison implements Comparable<Livraison>
         // TODO : À compléter/modifier
 {
 
@@ -53,7 +53,7 @@ public class Livraison
      */
     public int getId() {
         // TODO : À compléter/modifier
-        return 0;
+        return this.id;
     }
 
     /**
@@ -61,7 +61,10 @@ public class Livraison
      *
      * @return La priorite de cette livraison.
      */
-    // TODO : À compléter/modifier
+    public Priorite getPriorite(){
+        // TODO : À compléter/modifier
+        return this.priorite;
+    }
 
     /**
      * Retourne la tentative pour cette livraison.
@@ -70,7 +73,7 @@ public class Livraison
      */
     public int getTentative() {
         // TODO : À compléter/modifier
-        return 0;
+        return this.tentative;
     }
 
     /**
@@ -80,7 +83,7 @@ public class Livraison
      */
     public int getLot() {
         // TODO : À compléter/modifier
-        return 0;
+        return this.lot;
     }
 
     /**
@@ -116,9 +119,36 @@ public class Livraison
 
     /**
      * Compare cette livraison avec une autre livraison.
+     * return 1 si objet courant est prioritaire a autreLivraion
+     * return -1 si autreLivraion est prioritaire a objet courant
+     * return 0 s'ils ont les deux la meme prioritaire 
      *
      * @param autreLivraison La seconde livraison à comparer avec cette livraison.
      * @return Le résultat de la comparaison au sens de l'interface Comparable<T>.
      */
-    // TODO : À compléter/modifier
+    @Override
+    public int compareTo(Livraison autreLivraison){
+        // TODO : À compléter/modifier
+        // 1- le lot plus petit prioritaire
+       if(this.lot< autreLivraison.getLot()){
+           return 1;
+       } else if (autreLivraison.getLot()<this.lot ) {
+           return -1;
+       }
+       // si meme lot prendre celuis avec urgentce (mais ne doit pas etre les deux)
+       boolean thisUr = this.priorite == Priorite.URGENTE;
+       boolean autreUr = autreLivraison.getPriorite()== Priorite.URGENTE;
+       if(thisUr && !autreUr) return 1;
+       if(autreUr && !thisUr) return -1;
+
+       //si meme lot meme prioritie prendre celuis avec plus de tentative
+        if (autreLivraison.getTentative()<this.tentative) {
+           return 1;
+       } else if (this.tentative< autreLivraison.getTentative()) {
+           return -1;
+       }
+        // si tu est égale returne s'implememt 1
+        return 0;
+
+    }
 }
