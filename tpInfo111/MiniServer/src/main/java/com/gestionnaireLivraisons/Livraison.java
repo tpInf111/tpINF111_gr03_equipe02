@@ -31,6 +31,7 @@ public class Livraison
     public Livraison(Priorite priorite, int lot){
         this.priorite = priorite;
         this.lot = lot;
+        this.id = prochainID();
     }
 
     /**
@@ -39,7 +40,6 @@ public class Livraison
      */
     private static int prochainID() {
         // TODO : À compléter/modifier
-
         numSequentiel ++;
         return numSequentiel;
     }
