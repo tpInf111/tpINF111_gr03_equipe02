@@ -69,7 +69,7 @@ public class LivraisonFactory {
         // System.err.println ("Méthode non implémentée : LivraisonFactory::populateLivraison() - À Compléter") ;
         FilePrioriteLivraisons filePrioriteLivraisons = new FilePrioriteLivraisons();
 
-        // TODO : À compléter/modifier
+        // DONE : À compléter/modifier
         if (dataLivraisons!= null){
             for (int i =0; i < dataLivraisons.length; i++){
                 String livraison = dataLivraisons[i];

@@ -6,9 +6,10 @@ import java.util.ListIterator;
 /**
  * La classe qui liste des livraisons.
  */
-public class ListeLivraisons implements IListeLivraisons {
+public class ListeLivraisons implements IListeLivraisons, Iterable<Livraison> {
     // Les livraisons stockées dans une ArrayList
-    // TODO : À compléter/modifier
+    // done : À compléter/modifier
+    ArrayList<Livraison> listeLivraison = new ArrayList<>();
 
     /**
      * Ajout d'une livraison à la liste de livraisons.
@@ -16,7 +17,8 @@ public class ListeLivraisons implements IListeLivraisons {
      * @param livraison La livraison à ajouter.
      */
     public void ajouter(Livraison livraison) {
-        // TODO : À compléter/modifier
+        listeLivraison.add(livraison);
+        // DONE : À compléter/modifier
     }
 
     /**
@@ -26,8 +28,16 @@ public class ListeLivraisons implements IListeLivraisons {
      * @return La livraison supprimée ou null si non trouvée.
      */
     public Livraison supprimer(int idLivraison) {
-        // TODO : À compléter/modifier
-        return null;
+        Livraison retirer = null;
+        for (int i=0; i < listeLivraison.size(); i++){
+            if (listeLivraison.get(i).getId() == idLivraison){
+                retirer = listeLivraison.get(i);
+                listeLivraison.remove(i);
+                return retirer;
+            }
+        }
+        // done : À compléter/modifier DONE
+        return retirer;
     }
 
     /**
@@ -37,8 +47,15 @@ public class ListeLivraisons implements IListeLivraisons {
      * @return La livraison trouvée ou null si non trouvée.
      */
     public Livraison rechercher(int idLivraison) {
-        // TODO : À compléter/modifier
-        return null;
+        Livraison rechercher = null;
+        for (int i=0; i < listeLivraison.size(); i++){
+            if (listeLivraison.get(i).getId() == idLivraison){
+                rechercher = listeLivraison.get(i);
+                return rechercher;
+            }
+        }
+        // done : À compléter/modifier DONE
+        return rechercher;
     }
 
     /**
@@ -46,7 +63,8 @@ public class ListeLivraisons implements IListeLivraisons {
      *
      */
     public void vider() {
-        // TODO : À compléter/modifier
+        // done : À compléter/modifier
+        listeLivraison.clear();
     }
 
     /**
@@ -55,8 +73,8 @@ public class ListeLivraisons implements IListeLivraisons {
      * @return true si la liste est vide, false sinon.
      */
     public boolean estVide() {
-        // TODO : À compléter/modifier
-        return false;
+        // done : À compléter/modifier
+        return listeLivraison.isEmpty();
     }
 
     /**
@@ -65,8 +83,8 @@ public class ListeLivraisons implements IListeLivraisons {
      * @return Le nombre de livraisons.
      */
     public int taille() {
-        // TODO : À compléter/modifier
-        return 0;
+        // done : À compléter/modifier
+        return listeLivraison.size();
     }
 
     /**
@@ -76,8 +94,8 @@ public class ListeLivraisons implements IListeLivraisons {
      */
     @Override
     public ListIterator<Livraison> iterator() {
-        // TODO : À compléter/modifier
-        return null;
+        // done : À compléter/modifier
+        return listeLivraison.listIterator();
     }
 
     /**
@@ -87,7 +105,15 @@ public class ListeLivraisons implements IListeLivraisons {
      * @return L'indice de la livraison trouvée ou -1 si non trouvée.
      */
     private int chercher(int idLivraison) {
-        // TODO : À compléter/modifier
-        return 0;
+        // done : À compléter/modifier
+        int index = -1;
+        Livraison retirer = null;
+        for (int i=0; i < listeLivraison.size(); i++){
+            if (listeLivraison.get(i).getId() == idLivraison){
+                index = i;
+                return index;
+            }
+        }
+        return index;
     }
 }
