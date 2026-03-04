@@ -146,7 +146,7 @@ public abstract class Livreur {
      */
     public Iterator<Livraison> donneIterateurLivraisonsEnCours() {
         // TODO : À compléter/modifier
-        return null;
+        return this.livraisonsEnCours.iterator();
     }
 
     /**
@@ -156,6 +156,6 @@ public abstract class Livreur {
      */
     public int nbLivraisonsEffectuees() {
         // TODO : À compléter/modifier
-        return 0;
+        return this.livraisonsEffectuees.taille();
     }
 }
