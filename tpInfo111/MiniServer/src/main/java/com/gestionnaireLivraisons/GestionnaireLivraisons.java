@@ -155,6 +155,15 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
      */
     private String traiterID(Evenement evenement) {
         // TODO : À compléter/modifier
+        Connexion connexion = (Connexion) evenement.getSource();
+        Arguments arguments = new Arguments(evenement);
+
+        int idLivreur;
+        try{
+            idLivreur=Integer.parseInt(arguments.extraireArgumentSuivant());
+        }catch (NumberFormatException e){
+            return "ID_error";
+        }
 
         return "";
     }
