@@ -67,15 +67,15 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
                     switch (typeLivreur) {
                         case "VELO":
                             // TODO : À compléter/modifier
-                            livreur = null;
+                            livreur = new LivreurVelo(idLivreur,nomLivreur);
                             break;
                         case "CAMION":
                             // TODO : À compléter/modifier
-                            livreur = null;
+                            livreur = new LivreurCamion(idLivreur,nomLivreur);
                             break;
                         case "VOITURE":
                             // TODO : À compléter/modifier
-                            livreur = null;
+                            livreur = new LivreurVoiture(idLivreur,nomLivreur);
                             break;
                         default:
                             throw new IOException();
