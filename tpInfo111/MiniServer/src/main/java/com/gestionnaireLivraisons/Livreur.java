@@ -10,6 +10,10 @@ import java.util.Random;
 public abstract class Livreur {
     // Les attrbuts d'un livreur
     // TODO : À compléter/modifier
+    int id;
+    String nom;
+    ListeLivraisons livraisonsEnCours;
+    ListeLivraisons livraisonsEffectuees;
 
     /**
      * Construit un nouveau livreur.
@@ -18,6 +22,12 @@ public abstract class Livreur {
      * @param nom Le nom du nouveau livreur.
      */
     // TODO : À compléter/modifier
+    public Livreur(int id,String nom){
+        this.id=id;
+        this.nom=nom;
+        this.livraisonsEnCours = new ListeLivraisons();
+        this.livraisonsEffectuees = new ListeLivraisons();
+    }
 
     /**
      * L'accesseur pour l'id du livreur.
@@ -26,7 +36,7 @@ public abstract class Livreur {
      */
     public int getId() {
         // TODO : À compléter/modifier
-        return 0;
+        return this.id;
     }
 
     /**
@@ -36,7 +46,7 @@ public abstract class Livreur {
      */
     public String getNom() {
         // TODO : À compléter/modifier
-        return null;
+        return this.nom;
     }
 
     /**
@@ -46,7 +56,7 @@ public abstract class Livreur {
      */
     public boolean aDesLivraisonsEnCours() {
         // TODO : À compléter/modifier
-        return false;
+        return this.livraisonsEnCours.taille()>0;
     }
 
     /**
@@ -56,6 +66,7 @@ public abstract class Livreur {
      */
     public void ajouterLivraisonEnCours(Livraison livraison) {
         // TODO : À compléter/modifier
+        this.livraisonsEnCours.ajouter(livraison);
     }
 
     /**
@@ -65,6 +76,7 @@ public abstract class Livreur {
      */
     public void ajouterLivraisonEffectuee(Livraison livraison) {
         // TODO : À compléter/modifier
+        this.livraisonsEffectuees.ajouter(livraison);
     }
 
     /**
@@ -75,7 +87,7 @@ public abstract class Livreur {
      */
     public Livraison supprimerLivraisonEnCours(int idLivraison) {
         // TODO : À compléter/modifier
-        return null;
+        return this.livraisonsEnCours.supprimer(idLivraison);
     }
 
     /**
@@ -85,7 +97,7 @@ public abstract class Livreur {
      */
     public IListeLivraisons supprimerToutesLesLivraisons() {
         // TODO : À compléter/modifier
-        return null;
+       return null;
     }
 
     /**
