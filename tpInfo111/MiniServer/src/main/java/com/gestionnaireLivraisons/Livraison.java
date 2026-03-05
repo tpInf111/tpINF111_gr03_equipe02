@@ -95,7 +95,8 @@ public class Livraison implements Comparable<Livraison>
      *
      */
     public void setStatut(Statut statut) {
-        // TODO : À compléter/modifier
+        // DONE : À compléter/modifier
+        this.statut = statut;
     }
 
     /**
@@ -103,14 +104,14 @@ public class Livraison implements Comparable<Livraison>
      *
      * @return False si on a atteint le nombre maximal de tentatives pour cette livraison. True sinon.
      */
-    public boolean nouvelleTentative() {
-        // TODO : À compléter/modifier
+    public void nouvelleTentative() {
+        // DONE : À compléter/modifier
         if(this.tentative<MAX_TENTATIVES){
             this.tentative++;
-            return true;
-        }else{
-            return false;
         }
+    }
+    public boolean resteTentatives(){
+        return this.tentative < MAX_TENTATIVES;
     }
 
     /**
