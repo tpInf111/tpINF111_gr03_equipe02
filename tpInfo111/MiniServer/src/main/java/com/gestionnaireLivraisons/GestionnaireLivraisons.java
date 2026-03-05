@@ -210,7 +210,11 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
             livraison.nouvelleTentative();
             livraison.setStatut(Statut.EN_COURS);
             livreur.ajouterLivraisonEnCours(livraison);
-            deliveries.append(" ").append(livraison.getId()).append(" ").append(livraison.getLot()).append(" ").append(livraison.getPriorite()).append(" ").append(livraison.getTentative());
+            deliveries.append(" ")
+                    .append(livraison.getId())
+                    .append(" ").append(livraison.getLot())
+                    .append(" ").append(livraison.getPriorite())
+                    .append(" ").append(livraison.getTentative());
             nbAjoute++;
         }
         return "DELIVERIES " + nbAjoute + deliveries;
@@ -255,8 +259,52 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
      * @return La chaine constituant la réponse à retourner au client.
      */
     private String traiterINFO(Evenement evenement) {
-        // TODO : À compléter/modifier
-        return "";
+        // DONE : À compléter/modifier
+        Connexion connexion = (Connexion) evenement.getSource();
+
+        Livreur livreur = this.livreursAuthentifies.get(connexion);
+        if (livreur == null){
+            return "AUTHENTICATION_ERROR";
+        }
+
+        Arguments args = new Arguments(evenement);
+        String  argument = args.extraireArgumentSuivant();
+
+        if (argument == null){
+            if (!livreur.aDesLivraisonsEnCours()){
+                return "NO_DELIVERY_ERROR";
+            }
+            StringBuilder deliveries = new StringBuilder();
+            int nbAjoute = 0;
+
+            Iterator<Livraison> iterator = livreur.donneIterateurLivraisonsEnCours();
+            while (iterator.hasNext()){
+                Livraison livraison = iterator.next();
+                deliveries.append(" ")
+                        .append(livraison.getId()).append(" ")
+                        .append(livraison.getLot()).append(" ")
+                        .append(livraison.getPriorite()).append(" ")
+                        .append(livraison.getTentative());
+                nbAjoute++;
+            }
+            return "DELIVERIES_INFO " + nbAjoute + deliveries;
+        }
+        else {
+            int idLivraison;
+            try {
+                idLivraison = Integer.parseInt(argument);
+            } catch (NumberFormatException e){
+                return "BAD_ARGUMENT_ERROR";
+            }
+
+            Livraison livraison = livreur.rechercherLivraisonEnCours(idLivraison);
+            if (livraison == null){
+                return "BAD_DELIVERY_ERROR";
+            }
+
+            return "DELIVERIES_INFO 1 " + livraison.getId() + " "+ livraison.getLot() + " "
+                    + livraison.getPriorite() + " " + livraison.getTentative();
+        }
     }
 
     /**
