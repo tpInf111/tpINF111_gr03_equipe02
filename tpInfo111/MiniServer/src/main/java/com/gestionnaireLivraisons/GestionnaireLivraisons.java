@@ -175,8 +175,51 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
      * @return La chaîne à renvoyer au client.
      */
     private String traiterREGISTER(Evenement evenement) {
-        // TODO : À compléter/modifier
-        return "";
+        // DONE : À compléter/modifier
+        Connexion connexion = (Connexion) evenement.getSource();
+        //REGISTER <id_livreur > <mode_livraison> <nom_livreur>.
+        Arguments args = new Arguments(evenement);
+        String strIdLivreur = args.extraireArgumentSuivant();
+        String modeLivraison = args.extraireArgumentSuivant();
+        String  nomLivreur = args.lire();
+
+        if (strIdLivreur == null || modeLivraison == null || nomLivreur == null || nomLivreur.isEmpty()){
+            return "BAD_ARGUMENT_ERROR";
+        }
+
+        int idLivreur;
+        try{
+            idLivreur = Integer.parseInt(strIdLivreur);
+        }catch (NumberFormatException e){
+            return "BAD_ARGUMENT_ERROR";
+        }
+
+        if (this.livreursEnregistres.rechercher(idLivreur) != null){
+            return "ALREADY_REGISTERED_ERROR";
+        }
+
+        Livreur livreur;
+        switch (modeLivraison.toUpperCase()){
+            case "VELO":
+                livreur = new LivreurVelo(idLivreur,nomLivreur);
+                break;
+            case "VOITURE":
+                livreur = new LivreurVoiture(idLivreur,nomLivreur);
+                break;
+            case "CAMION":
+                livreur = new LivreurCamion(idLivreur, nomLivreur);
+                break;
+            default:
+                return "BAD_ARGUMENT_ERROR";
+        }
+
+        try {
+            this.livreursEnregistres.ajouter(livreur);
+        }catch (ListeChaineeException e){
+            return "BAD_ARGUMENT_ERROR";
+        }
+
+        return "REGISTERED " + idLivreur + " " + nomLivreur;
     }
 
     /**
