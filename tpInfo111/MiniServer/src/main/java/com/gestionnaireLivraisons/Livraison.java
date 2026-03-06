@@ -106,7 +106,7 @@ public class Livraison implements Comparable<Livraison>
      */
     public void nouvelleTentative() {
         // DONE : À compléter/modifier
-        if(this.tentative<MAX_TENTATIVES){
+        if(resteTentatives()){
             this.tentative++;
         }
     }

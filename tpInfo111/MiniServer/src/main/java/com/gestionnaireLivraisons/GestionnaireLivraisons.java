@@ -157,15 +157,40 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
         // TODO : À compléter/modifier
         Connexion connexion = (Connexion) evenement.getSource();
         Arguments arguments = new Arguments(evenement);
+        String strID= arguments.extraireArgumentSuivant();
 
+        //verification de l'argument
+        if(strID==null){
+            return "ID_ERROR";
+        }
         int idLivreur;
+
+        //transforme en integers une chaine de character et si ce n'est pas possible il renvoi une erreur
         try{
-            idLivreur=Integer.parseInt(arguments.extraireArgumentSuivant());
+            idLivreur=Integer.parseInt(strID);
         }catch (NumberFormatException e){
-            return "ID_error";
+            return "ID_ERROR";
         }
 
-        return "";
+        //verification si le livreur est enregistre
+        Livreur livreur= this.livreursEnregistres.rechercher(idLivreur);
+        if(livreur == null){
+            return "ID_ERROR"; // il n'est pas existant dans la base de donnee
+        }
+
+        //verification pour voir si le livreur est deja connecter a un autre key
+        if(this.livreursAuthentifies.containsValue(livreur)){
+            return "ID_ERROR"; //il est deja connecter
+        }
+
+        //verification si connexion (key) est deja utiliser par un autre livreur
+        if(this.livreursAuthentifies.containsKey(connexion)){
+            return "ID_ERROR"; // session a deja un user
+        }
+
+        //Authentification réussie
+        this.livreursAuthentifies.put(connexion, livreur);
+        return "ID_OK " + idLivreur;
     }
 
     /**
