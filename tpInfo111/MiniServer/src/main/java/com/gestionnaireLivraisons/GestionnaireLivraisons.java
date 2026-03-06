@@ -307,6 +307,34 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
      */
     private String traiterFAILED(Evenement evenement) {
         // TODO : À compléter/modifier
+        Connexion connexion= (Connexion) evenement.getSource();
+        Livreur livreur = this.livreursAuthentifies.get(connexion);
+
+        if(livreur==null){
+            return "AUTHENTICATION_ERROR";
+        }
+
+        Arguments arguments= new Arguments(evenement);
+        String srtID = arguments.extraireArgumentSuivant();
+
+        if(srtID==null){
+            return "BAD_ARGUMENT_ERROR";
+        }
+
+        int idLivraison;
+
+        try{
+            idLivraison=Integer.parseInt(srtID);
+        }catch (NumberFormatException e){
+            return "BAD_ARGUMENT_ERROR";
+        }
+
+        Livraison livraison= livreur.supprimerLivraisonEnCours(idLivraison);
+
+        if(livraison==null){
+            return "BAD_DELIVERY_ERROR";
+        }
+
         return "";
     }
 
