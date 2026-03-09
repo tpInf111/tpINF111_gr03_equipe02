@@ -10,10 +10,10 @@ import java.util.Random;
 public abstract class Livreur {
     // Les attrbuts d'un livreur
     // TODO : À compléter/modifier
-    int id;
-    String nom;
-    ListeLivraisons livraisonsEnCours;
-    ListeLivraisons livraisonsEffectuees;
+    private int id;
+    private  String nom;
+    private ListeLivraisons livraisonsEnCours;
+    private ListeLivraisons livraisonsEffectuees;
 
     /**
      * Construit un nouveau livreur.

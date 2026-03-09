@@ -449,6 +449,17 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
      */
     private String traiterSEND(Evenement evenement) {
         // TODO : À compléter/modifier
+        Connexion connexion = (Connexion) evenement.getSource();
+        // vériffication conetction
+        Livreur livreur = this.livreursAuthentifies.get(connexion);
+        if (livreur == null){
+            return "AUTHENTICATION_ERROR";
+        }
+        // extraire info message
+        Arguments args = new Arguments(evenement);
+        String idMsg = args.extraireArgumentSuivant();
+        String destinataire = args.extraireArgumentSuivant();
+        String msg = args.lire();
         return "";
     }
 
