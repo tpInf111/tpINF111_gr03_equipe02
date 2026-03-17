@@ -77,8 +77,10 @@ public class FilePrioriteLivraisons {
      */
     public void afficher() {
         // DODO : À compléter/modifier
-        for(Livraison livraison : this.fileLivraisonPrio){
-            System.out.print(livraison);
+        PriorityQueue<Livraison> copierFile = new PriorityQueue<>();
+        copierFile.addAll(this.fileLivraisonPrio);
+        while(!copierFile.isEmpty()){
+            System.out.print(copierFile.poll());
         }
     }
 }

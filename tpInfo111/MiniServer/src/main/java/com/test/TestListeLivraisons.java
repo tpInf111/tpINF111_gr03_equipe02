@@ -19,6 +19,7 @@ public class TestListeLivraisons {
         listeLivraisons.ajouter(lv2);
         listeLivraisons.ajouter(lv3);
         listeLivraisons.afficher();
+        System.out.println();
     }
 
     /**
@@ -28,8 +29,10 @@ public class TestListeLivraisons {
         System.out.print("Test supprimer : "+"\n");
 
         // DON : À compléter/modifier
-        listeLivraisons.supprimer(9);
+        listeLivraisons.supprimer(8);
         listeLivraisons.afficher();
+        System.out.println();
+
     }
 
     /**
@@ -40,9 +43,11 @@ public class TestListeLivraisons {
 
         // TODO : À compléter/modifier
 
-        System.out.println("Recherce de ID 9 (il a etait suprimer)"+listeLivraisons.rechercher(9));
-        System.out.println("Recherce de ID 8"+listeLivraisons.rechercher(8));
-        System.out.println("Recherce de ID 3 (pas dans listeLivraison)"+listeLivraisons.rechercher(3));
+       // System.out.println("Recherce de ID 2 (il a etait suprimer)"+listeLivraisons.rechercher(2));
+        System.out.println("Recherce de ID 8 (il a etait suprimer)"+listeLivraisons.rechercher(8));
+        System.out.println("Recherce de ID 9 "+listeLivraisons.rechercher(9));
+        System.out.println();
+
 
 
     }
@@ -55,8 +60,10 @@ public class TestListeLivraisons {
 
         // TODO : À compléter/modifier
         listeLivraisons.vider();
-        System.out.println("Le contenu de la liste est ");
+        System.out.println("Le contnuer de la liste est ");
         listeLivraisons.afficher();
+        System.out.println();
+
     }
 
     /**
@@ -67,6 +74,8 @@ public class TestListeLivraisons {
 
         // TODO : À compléter/modifier
         System.out.println(" la liste est vide: "+ listeLivraisons.estVide());
+        System.out.println();
+
     }
 
     /**
@@ -76,10 +85,12 @@ public class TestListeLivraisons {
         System.out.print("Test taille : "+"\n");
 
         // TODO : À compléter/modifier
-        System.out.println("taille avant ajout: "+ listeLivraisons.taille());
+        System.out.println("taille avans ajout: "+ listeLivraisons.taille());
         listeLivraisons.ajouter(lv1);
         listeLivraisons.ajouter(lv2);
         System.out.println(listeLivraisons.taille());
+        System.out.println();
+
     }
 
 
