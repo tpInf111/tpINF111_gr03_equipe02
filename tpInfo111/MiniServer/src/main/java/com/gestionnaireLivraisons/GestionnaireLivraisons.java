@@ -22,7 +22,7 @@ class AuthenticationException extends Exception {
  */
 public class GestionnaireLivraisons implements GestionnaireEvenement {
     // Emplacement du fichier contenant la liste des livreurs enregistrés.
-    final private static String fichierLivreurs = "C:\\Users\\victo\\IdeaProjects\\tpInfo\\tpInfo111\\MiniServer\\src\\main\\livreurs.txt";
+    final private static String fichierLivreurs = "tpInfo111\\MiniServer\\src\\main\\livreurs.txt";
 
     // Attributs d'ínstance pour un GestionnaireLivraisons
     final private IListeChaineeLivreurs livreursEnregistres;
@@ -52,7 +52,6 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
      */
     private void lireFichierLivreurs() {
         try {
-
             List<String> lignes = Files.readAllLines(Path.of(GestionnaireLivraisons.fichierLivreurs), StandardCharsets.UTF_8);
 
             for (String ligne : lignes) {
@@ -133,7 +132,19 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
      *
      */
     public void afficherStatistiques() {
-        // TODO : À compléter/modifier
+        // DONE : À compléter/modifier
+        System.out.println("Livraisons en attente : " + this.livraisonsAEffectuer.taille());
+        System.out.println("Livraisons échouées : " + this.livraisonsEchouees.taille());
+        System.out.println("Livreurs authentifiés : " + this.livreursAuthentifies.size());
+        System.out.println("Livreurs enregistrés : " + this.livreursEnregistres.taille());
+        System.out.println("Livraisons en cours par livreur :");
+        Enumeration<Connexion> connexions = this.livreursAuthentifies.keys();
+        while (connexions.hasMoreElements()) {
+            Connexion cnx = connexions.nextElement();
+            Livreur livreur = this.livreursAuthentifies.get(cnx);
+            System.out.println(livreur.getNom() + " : "
+                    + livreur.nbLivraisonsEnCours() + " en cours");
+        }
     }
 
 
@@ -293,7 +304,7 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
 
         while(nbAjoute < nbAAttribuer && !this.livraisonsAEffectuer.estVide()){
             Livraison livraison = this.livraisonsAEffectuer.retirer();
-            livraison.nouvelleTentative();
+            //livraison.nouvelleTentative(); doit être fait dans failed?
             livraison.setStatut(Statut.EN_COURS);
             livreur.ajouterLivraisonEnCours(livraison);
             deliveries.append(" ").append(livraison.getId())
@@ -465,7 +476,7 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
      * @return La chaine constituant la réponse à retourner au client.
      */
     private String traiterSEND(Evenement evenement) {
-        // TODO : À compléter/modifier
+        // DONE : À compléter/modifier
         Connexion connexion = (Connexion) evenement.getSource();
         // vériffication conetction
         Livreur livreur = this.livreursAuthentifies.get(connexion);
@@ -477,7 +488,47 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
         String idMsg = args.extraireArgumentSuivant();
         String destinataire = args.extraireArgumentSuivant();
         String msg = args.lire();
-        return "";
+
+        if (idMsg==null||destinataire==null||msg==null||msg.isEmpty()){
+            return "BAD_ARGUMENT_ERROR";
+        }
+
+        // le msg a dégà été traité
+        if (this.messagesId.contains(idMsg)) {
+            return "ACK " + idMsg;
+        }
+        // ajoute dans msg traité
+        this.messagesId.add(idMsg);
+        String msgEnvoyer = "MSG " + livreur.getId() + " " + msg;
+        if (destinataire.equals("*")){
+            for (Map.Entry<Connexion, Livreur> entry: this.livreursAuthentifies.entrySet()){
+                if (!entry.getKey().equals(connexion)){
+                    entry.getKey().envoyer(msgEnvoyer);
+                }
+            }
+        }
+        else {
+            int idDest;
+            try {
+                idDest= Integer.parseInt(destinataire);
+            }
+            catch (NumberFormatException e){
+                return "BAD_ARGUMENT_ERROR";
+            }
+            Connexion connexDest = null;
+            for (Map.Entry<Connexion, Livreur> entry: this.livreursAuthentifies.entrySet()){
+                if (entry.getValue().getId() == idDest) {
+                    connexDest =entry.getKey();
+                    break;
+                }
+            }
+            if (connexDest==null){
+                return "AUTHENTIFICATION_ERROR";
+            }
+            connexDest.envoyer(msgEnvoyer);
+        }
+
+        return "ACK " + idMsg;
     }
 
     /**

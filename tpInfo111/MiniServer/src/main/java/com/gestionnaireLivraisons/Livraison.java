@@ -16,7 +16,7 @@ public class Livraison implements Comparable<Livraison> {
     // DONE : À compléter/modifier
 
     // la constante valant 3
-    final int MAX_TENTATIVES = 3;
+    private final int MAX_TENTATIVES = 3;
 
     /**
      * Constructeur d'une livraison.
