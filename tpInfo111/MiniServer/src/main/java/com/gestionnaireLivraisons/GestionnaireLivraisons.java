@@ -183,7 +183,7 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
      * @return La chaîne à renvoyer au client.
      */
     private String traiterID(Evenement evenement) {
-        // TODO : À compléter/modifier
+        // DONE : À compléter/modifier
         Connexion connexion = (Connexion) evenement.getSource();
         Arguments arguments = new Arguments(evenement);
         String strID= arguments.extraireArgumentSuivant();
@@ -323,7 +323,7 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
      * @return La chaîne à renvoyer au client.
      */
     private String traiterDELIVERED(Evenement evenement) {
-        // TODO : À compléter/modifier
+        // DONE : À compléter/modifier
         Connexion connexion = (Connexion) evenement.getSource();
         // vériffication conetction
         Livreur livreur = this.livreursAuthentifies.get(connexion);
@@ -391,7 +391,17 @@ public class GestionnaireLivraisons implements GestionnaireEvenement {
             return "BAD_DELIVERY_ERROR";
         }
 
-        return "";
+        livraison.nouvelleTentative();
+
+        if(livraison.resteTentatives()){
+            livraison.setStatut(Statut.EN_ATTENTE);
+            this.livraisonsAEffectuer.ajouter(livraison);
+            return "ECHEC: Nouvelle tentative ->:"+livraison.getTentative()+"/3.";
+        }else{
+            livraison.setStatut(Statut.ECHOUEE);
+            this.livraisonsEchouees.ajouter(livraison);
+            return "ECHEC DEFINITIF: nombre maximal de tentative atteint pour la livraison";
+        }
     }
 
     /**
