@@ -59,8 +59,11 @@ public class TestListeChaineeLivreurs {
     private static void testToArray() {
         System.out.print("Test toArray : "+"\n");
 
-        // DODO : À compléter/modifier
-        System.out.println(chaineTest.toArray());
+        Livreur[] tableau = chaineTest.toArray();
+
+        for (Livreur livreur : tableau) {
+            System.out.println(livreur);
+        }
     }
 
     /**
